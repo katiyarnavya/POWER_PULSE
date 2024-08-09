@@ -13,9 +13,9 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Replace the hardcoded URL with your backend URL
+      
       const { data } = await axios.post(
-        'http://localhost:4000/send/mail',
+        'https://power-pulse.vercel.app/send/mail', 
         { name, email, message },
         {
           withCredentials: true,
@@ -26,9 +26,9 @@ const Contact = () => {
       setEmail('');
       setMessage('');
       toast.success(data.message);
-      setLoading(false);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
+    } finally {
       setLoading(false);
     }
   };
@@ -38,27 +38,32 @@ const Contact = () => {
       <form onSubmit={sendMail}>
         <h1>Contact Us</h1>
         <div>
-          <label>Name</label>
+          <label htmlFor="name">Name</label>
           <input
+            id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Message</label>
-          <input
-            type="text"
+          <label htmlFor="message">Message</label>
+          <textarea
+            id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            required
           />
         </div>
         <button
